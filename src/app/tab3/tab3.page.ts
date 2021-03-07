@@ -30,7 +30,6 @@ export class Tab3Page {
   }
 
   ionSelectOnChange(selectedValue: any) {
-    debugger;
     console.log('Selected', selectedValue);
     this.currentLangSelection = selectedValue.detail.value;
   }
@@ -62,6 +61,8 @@ export class Tab3Page {
   async saveLanguage(firstWord: String, secondWord: String){
     this.storageController.get(storageKeys.WORDS_CONSTANT).then((val) => {
         this.words = val;
+        if(!val)
+          this.words = [];
         this.newWord.first = firstWord;
         this.newWord.second = secondWord;
         this.newWord.languageId = this.currentLangSelection;

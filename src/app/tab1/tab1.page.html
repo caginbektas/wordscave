@@ -14,12 +14,12 @@
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-        <ion-row>
+        <ion-row *ngFor="let stat of stats">
           <ion-col size="4">
-            123123
+            {{ stat.count }}
           </ion-col>
           <ion-col size="8">
-            English - Turkish
+            {{ stat.name }}
           </ion-col>
         </ion-row>
       </ion-grid>
