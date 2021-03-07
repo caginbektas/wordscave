@@ -30,7 +30,6 @@ export class Tab3Page {
   }
 
   ionSelectOnChange(selectedValue: any) {
-    console.log('Selected', selectedValue);
     this.currentLangSelection = selectedValue.detail.value;
   }
  
@@ -68,6 +67,9 @@ export class Tab3Page {
         this.newWord.languageId = this.currentLangSelection;
         this.words.push(this.newWord);
         this.storageController.set(storageKeys.WORDS_CONSTANT, this.words);
+
+        this.firstWord = null;
+        this.secondWord = null;
     });
   }
 }
