@@ -3,6 +3,7 @@ import { storageKeys } from '../entity/storageKeys';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
 import { language } from '../entity/language';
+import { word } from '../entity/word';
 
 @Component({
   selector: 'app-tab2',
@@ -13,6 +14,7 @@ export class Tab2Page {
   languages: Array<language> = [];
   newLanguage: language = new language();
   language: String = null;
+  words: Array<word> = [];
 
   constructor(private storageController: Storage,
     private alertController: AlertController) {
@@ -39,7 +41,8 @@ export class Tab2Page {
         {
           text: 'Okay',
           handler: () => {
-            this.saveLanguage(this.language);
+            if (this.language)
+              this.saveLanguage(this.language);
           }
         }
       ]
@@ -86,7 +89,12 @@ export class Tab2Page {
         this.languages = val;
         this.languages = this.languages.filter((language) => {return language.name != languageName});
         this.storageController.set(storageKeys.LANGUAGES_CONSTANT, this.languages);
-        //todo: delete words///
+
+        this.storageController.get(storageKeys.WORDS_CONSTANT).then((words) => {
+          this.words = words;
+          this.words = this.words.filter((word) => {return word.languageId != languageName});
+          this.storageController.set(storageKeys.WORDS_CONSTANT, this.words);
+      });
     });
   }
 }

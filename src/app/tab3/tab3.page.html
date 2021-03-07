@@ -8,26 +8,28 @@
 
 <ion-content [fullscreen]="true">
   <ion-card>
-    <ion-card-content>
+    <div *ngIf="!languages.length > 0">
+      <p>Start with adding a language.</p>
+    </div>
+    <ion-card-content [hidden]="!languages.length > 0">
       <ion-list>
         <ion-item>
           <ion-label>Choose Lang.</ion-label>
-          <ion-select interface="popover">
-            <ion-select-option value="nes">English-Turkish</ion-select-option>
-            <ion-select-option value="n64">Turkish-English</ion-select-option>
+          <ion-select (ionChange)="ionSelectOnChange($event)" interface="popover">
+            <ion-select-option *ngFor="let language of languages" value="{{ language.name }}">{{ language.name }}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>
      
         <ion-item-divider>
           <ion-label color="dark">1st side:</ion-label>
-          <ion-input placeholder="placeholder"></ion-input>
+          <ion-input [(ngModel)]="firstWord" placeholder="placeholder"></ion-input>
         </ion-item-divider>
         <ion-item-divider>
           <ion-label color="dark">2nd side:</ion-label>
-          <ion-input placeholder="placeholder"></ion-input>
+          <ion-input [(ngModel)]="secondWord" placeholder="placeholder"></ion-input>
         </ion-item-divider>
-        <ion-button expand="block">Save</ion-button>
+        <ion-button (click)="saveWordAlert()" expand="block">Save</ion-button>
 
         <ion-badge color="warning">Sides will be the card sides in the quiz</ion-badge>
 
