@@ -6,7 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['tab4.page.scss']
 })
 export class Tab4Page {
+  hiddenFirst = false;
+  hiddenSecond = true;
 
   constructor() {}
 
+  flipCards(){
+    this.hiddenFirst = !this.hiddenFirst;
+    this.hiddenSecond = !this.hiddenSecond;
+  }
 }
