@@ -12,21 +12,17 @@
       <ion-card-subtitle>Available languages:</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
+      <div *ngIf="!languages.length > 0">
+        <p>Start with adding a language.</p>
+      </div>
       <ion-list>
-        <ion-item > 
+        <ion-item *ngFor="let language of languages"> 
           <ion-label>
-            <h2>English - Turkish</h2>          
+            <h2>{{ language.name }}</h2>          
           </ion-label>
-          <ion-icon name="list-outline"></ion-icon>
-          <ion-icon name="close-circle-outline"></ion-icon>
-        </ion-item>
-        <ion-item > 
-          <ion-label>
-            <h2>English - Turkish</h2>          
-          </ion-label>
-          <ion-icon name="list-outline"></ion-icon>
-          <ion-icon name="close-circle-outline"></ion-icon>
-        </ion-item>
+          <ion-icon name="list-outline" ></ion-icon>
+          <ion-icon name="close-circle-outline" (click)=deleteLanguageAlert(language.name)></ion-icon>
+        </ion-item>        
     </ion-list>
     </ion-card-content>
   </ion-card>
@@ -35,8 +31,11 @@
       <ion-card-subtitle>Add new language:</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-        <ion-textarea placeholder="Enter the name"></ion-textarea>
-        <ion-button expand="block">Save</ion-button>
+      <ion-item-divider>
+        <ion-label color="dark">Name</ion-label>
+        <ion-input [(ngModel)]="language" placeholder="English-Turkish"></ion-input>
+      </ion-item-divider>
+      <ion-button expand="block" (click)=saveLangAlert()>Save</ion-button>
 
     </ion-card-content>
   </ion-card>

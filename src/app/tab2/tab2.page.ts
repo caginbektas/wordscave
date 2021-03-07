@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { storageKeys } from '../entity/storageKeys';
 import { Storage } from '@ionic/storage';
+import { AlertController } from '@ionic/angular';
 import { language } from '../entity/language';
 
 @Component({
@@ -10,24 +11,82 @@ import { language } from '../entity/language';
 })
 export class Tab2Page {
   languages: Array<language> = [];
-  newLanguage: language = null;
+  newLanguage: language = new language();
+  language: String = null;
 
-  constructor(private storageController: Storage) {}
+  constructor(private storageController: Storage,
+    private alertController: AlertController) {
+      
+    }
 
-  saveLanguage(languageName: String){
+  ionViewDidEnter(){
     this.storageController.get(storageKeys.LANGUAGES_CONSTANT).then((val) => {
       if(val)
+        this.languages = val; 
+    });
+  }
+
+  async saveLangAlert(){
+    const alert = await this.alertController.create({
+      header: 'Confirm',
+      message: 'Add new language: ' + this.language,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, 
+        {
+          text: 'Okay',
+          handler: () => {
+            this.saveLanguage(this.language);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }  
+
+  async saveLanguage(languageName: String){
+    this.storageController.get(storageKeys.LANGUAGES_CONSTANT).then((val) => {
         this.languages = val;
+        if(!val)
+          this.languages = [];
         this.newLanguage.name = languageName;
         this.languages.push(this.newLanguage)
         this.storageController.set(storageKeys.LANGUAGES_CONSTANT, this.languages);
     });
   }
 
-  getLanguages(){
-    this.storageController.get(storageKeys.LANGUAGES_CONSTANT).then((val) => {
-      if(val)
-        this.languages = val; 
+  async deleteLanguageAlert(languageName: String){
+    const alert = await this.alertController.create({
+      header: 'Confirm',
+      message: 'Are you sure to delete ' + languageName + '? All the words will be deleted permanently.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, 
+        {
+          text: 'Okay',
+          handler: () => {
+            this.deleteLanguage(languageName);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  } 
+
+  async deleteLanguage(languageName: String){
+      this.storageController.get(storageKeys.LANGUAGES_CONSTANT).then((val) => {
+        this.languages = val;
+        this.languages = this.languages.filter((language) => {return language.name != languageName});
+        this.storageController.set(storageKeys.LANGUAGES_CONSTANT, this.languages);
+        //todo: delete words///
     });
   }
 }
