@@ -1,0 +1,24 @@
+ion-title{
+    text-align: center;
+}
+ion-card{
+    margin-top: 10px;
+}
+.firstSide{
+  height: 200px;
+  font-weight: bold;
+  color: black;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.secondSide{
+    height: 200px;
+    font-weight: bold;
+    color: black;
+    background-color: lightsteelblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

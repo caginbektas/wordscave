@@ -1,17 +1,17 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      New Word
+      QUIZ
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-card>
-    <div *ngIf="!languages.length > 0">
+    <div *ngIf="!words.length > 0">
       <p>Start with adding a language.</p>
     </div>
-    <ion-card-content [hidden]="!languages.length > 0">
+    <ion-card-content [hidden]="!words.length > 0">
       <ion-list>
         <ion-item>
           <ion-label>Choose Lang.</ion-label>
@@ -22,20 +22,17 @@
       </ion-list>
       <ion-label color="dark">Language: {{currentLangSelection}}</ion-label>
 
-        <ion-item-divider>
-          <ion-label color="dark">1st side:</ion-label>
-          <ion-input [(ngModel)]="firstWord" placeholder="placeholder"></ion-input>
-        </ion-item-divider>
-        <ion-item-divider>
-          <ion-label color="dark">2nd side:</ion-label>
-          <ion-input [(ngModel)]="secondWord" placeholder="placeholder"></ion-input>
-        </ion-item-divider>
-        <ion-button (click)="saveWordAlert()" expand="block">Save</ion-button>
-
-        <ion-badge color="warning">Sides will be the card sides in the quiz</ion-badge>
+      <div class="flip-card" >
+        <div [hidden]=hiddenFirst class="firstSide" (click)="flipCards()">
+          <p>{{randomWord.first}}</p>
+        </div>
+        <div [hidden]=hiddenSecond class="secondSide" (click)="flipCards()">
+          <p>{{ randomWord.second }}</p>
+        </div>
+      </div>
+      <ion-button (click)="pickRandomWord()" expand="block">Next</ion-button>
 
     </ion-card-content>
   </ion-card>
-
 
 </ion-content>
